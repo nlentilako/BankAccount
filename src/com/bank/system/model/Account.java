@@ -1,5 +1,6 @@
 package com.bank.system.model;
 import com.bank.system.interfaces.Transactable;
+import com.bank.system.exceptions.InvalidAmountException;
 
 
 
@@ -28,18 +29,17 @@ public abstract class Account implements Transactable {
     public abstract String getAccountType();
 
     // Deposit method - common for all account types
-    public boolean deposit(double amount) {
-
-        if (amount > 0) {
-            this.balance += amount;
-            return true;
+    public boolean deposit(double amount) throws InvalidAmountException {
+        if (amount <= 0) {
+            throw new InvalidAmountException("Invalid amount. Amount must be greater than 0.");
         }
-        return false;
+        this.balance += amount;
+        return true;
     }
 
 
     // Withdraw method - to be overridden by subclasses
-    public abstract boolean withdraw(double amount);
+    public abstract boolean withdraw(double amount) throws com.bank.system.exceptions.InsufficientFundsException;
 
     // Getters and setters
     public String getAccountNumber() {
@@ -78,12 +78,9 @@ public abstract class Account implements Transactable {
         accountCounter = 0;
     }
     @Override
-    public boolean processTransaction(double amount, String type) {
-
+    public boolean processTransaction(double amount, String type) throws com.bank.system.exceptions.InvalidAmountException, com.bank.system.exceptions.InsufficientFundsException {
         if (type.equalsIgnoreCase("DEPOSIT")) {
-
             return deposit(amount);
-
         } else if (type.equalsIgnoreCase("WITHDRAWAL")) {
             return withdraw(amount);
         }
