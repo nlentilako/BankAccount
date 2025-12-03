@@ -1,6 +1,9 @@
 package com.bank.system.model;
 
 import static com.bank.system.utils.ConsoleUtil.printf;
+import com.bank.system.exceptions.InsufficientFundsException;
+import com.bank.system.exceptions.InvalidAmountException;
+
 public class SavingsAccount extends Account  {
     private final double interestRate;
     private final double minimumBalance;
@@ -31,14 +34,16 @@ public class SavingsAccount extends Account  {
     }
 
     @Override
-    public boolean withdraw(double amount) {
+    public boolean withdraw(double amount) throws InsufficientFundsException {
         if (amount <= 0) {
-            return false;
+            throw new InvalidAmountException("Invalid amount. Amount must be greater than 0.");
         }
 
         // Check if withdrawal would bring balance below minimum
         if (getBalance() - amount < minimumBalance) {
-            return false;
+            throw new InsufficientFundsException(
+                String.format("Withdrawal failed. Insufficient funds. Current balance: $%.2f, Minimum balance: $%.2f", 
+                             getBalance(), minimumBalance));
         }
 
         setBalance(getBalance() - amount);
@@ -59,12 +64,9 @@ public class SavingsAccount extends Account  {
         return minimumBalance;
     }
     @Override
-    public boolean processTransaction(double amount, String type) {
-
+    public boolean processTransaction(double amount, String type) throws InvalidAmountException, InsufficientFundsException {
         if (type.equalsIgnoreCase("DEPOSIT")) {
-
             return deposit(amount);
-
         } else if (type.equalsIgnoreCase("WITHDRAWAL")) {
             return withdraw(amount);
         }

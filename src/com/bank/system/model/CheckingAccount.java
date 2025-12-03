@@ -1,5 +1,8 @@
 package com.bank.system.model;
 import static com.bank.system.utils.ConsoleUtil.printf;
+import com.bank.system.exceptions.InsufficientFundsException;
+import com.bank.system.exceptions.InvalidAmountException;
+import com.bank.system.exceptions.OverdraftExceededException;
 
 public class CheckingAccount extends Account {
     private final double overdraftLimit;
