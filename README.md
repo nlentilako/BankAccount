@@ -1,59 +1,155 @@
 # Bank Account Management System
 
-## Project Overview
+A console-based bank account management system built with Java 21 that demonstrates clean code practices, exception handling, and unit testing.
 
-A comprehensive console-based banking application that demonstrates Object-Oriented Programming principles in Java. The system allows bank staff to manage customer accounts, process transactions, and view account and transaction history.
-A comprehensive console-based banking application that demonstrates Object-Oriented Programming principles in Java. The system allows bank staff to manage customer accounts, process transactions, and view account and transaction history.
 ## Features
-- View transaction history for specific accounts
-- Create new bank accounts with customer details
-- View all accounts with detailed information
-- Process deposits and withdrawals
-- View transaction history for specific accounts
-- Support for different account types (Savings and Checking)
-- Support for different customer types (Regular and Premium)
-- Menu-driven interface for easy navigation
-- **Abstraction**: Abstract classes and interfaces
-## OOP Concepts Implemented
 
-- **Encapsulation**: Private fields with public getters/setters
-- **Inheritance**: Account and Customer hierarchies
-- **Abstraction**: Abstract classes and interfaces
-- **Polymorphism**: Method overriding
-- **Composition**: Manager classes that contain collections of objects
-- `CheckingAccount`: Inherits from Account, includes overdraft limit and monthly fee
-## Classes Structure
-- `Customer` (abstract): Base class for all customers
-### Core Classes
-- `Account` (abstract): Base class for all accounts
-- `SavingsAccount`: Inherits from Account, includes interest rate and minimum balance
-- `CheckingAccount`: Inherits from Account, includes overdraft limit and monthly fee
+- **Account Management**: Create and manage savings and checking accounts
+- **Transaction Processing**: Deposit, withdrawal, and transfer operations
+- **Exception Handling**: Robust error handling with custom exceptions
+- **Statement Generation**: Detailed account statements with transaction history
+- **Testing**: Comprehensive JUnit 5 test coverage
+- **Git Integration**: Version control with feature branching and cherry-picking
 
-### Customer Classes
-- `Customer` (abstract): Base class for all customers
-- `RegularCustomer`: Standard banking services
-- `PremiumCustomer`: Enhanced benefits with waived fees
+## Project Structure
 
-### Transaction Classes
-- `Transaction`: Records transaction details
-- `Transactable` (interface): Defines transaction contract
+```
+bank-account-management-system/
+├── src/
+│   ├── Main.java
+│   ├── models/
+│   │   ├── Account.java
+│   │   ├── SavingsAccount.java
+│   │   ├── CheckingAccount.java
+│   │   ├── Customer.java
+│   │   ├── RegularCustomer.java
+│   │   ├── PremiumCustomer.java
+│   │   └── Transaction.java
+│   ├── exceptions/
+│   │   ├── InvalidAmountException.java
+│   │   ├── InsufficientFundsException.java
+│   │   └── OverdraftExceededException.java
+│   ├── services/
+│   │   ├── AccountManager.java
+│   │   ├── TransactionManager.java
+│   │   └── StatementGenerator.java
+│   └── utils/
+│       └── ValidationUtils.java
+├── src/test/java/
+│   ├── AccountTest.java
+│   ├── TransactionManagerTest.java
+│   └── ExceptionTest.java
+├── docs/
+│   └── git-workflow.md
+└── README.md
+```
 
-### Management Classes
-- `AccountManager`: Manages collection of accounts
-- `TransactionManager`: Manages collection of transactions
+## Technology Stack
 
-### Main Application
-- `Main`: Console application with menu system
+- Java 21 (LTS)
+- JUnit 5 for testing
+- Git for version control
+- Maven-compatible structure (can be imported into IDEs)
 
 ## Setup Instructions
 
-1. **Compile all Java files:**
-   ```bash
-   javac *.java
-   ```
+### Prerequisites
+- Java 21 or higher
+- Git
 
-2. **Run the application:**
-   ```bash
-   java Main
-   ```
+### Building and Running
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd bank-account-management-system
+```
+
+2. Compile the project:
+```bash
+javac -d out src/main/java/*.java src/main/java/models/*.java src/main/java/exceptions/*.java src/main/java/services/*.java src/main/java/utils/*.java
+```
+
+3. Run the application:
+```bash
+java -cp out Main
+```
+
+### Running Tests
+
+To run the unit tests, you'll need JUnit 5 in your classpath:
+
+```bash
+# Compile test files
+javac -cp "out:lib/junit-platform-console-standalone-1.9.2.jar" -d out \
+  src/test/java/*.java
+
+# Run tests
+java -cp "out:lib/junit-platform-console-standalone-1.9.2.jar" \
+  org.junit.platform.console.ConsoleLauncher --classpath "out" --select-package tests
+```
+
+## Git Workflow
+
+This project demonstrates proper Git workflows:
+
+1. **Feature Branching**: Each feature developed in isolated branches
+2. **Cherry-picking**: Selective application of commits across branches
+3. **Descriptive Commits**: Clear, meaningful commit messages
+
+See [Git Workflow Documentation](docs/git-workflow.md) for detailed commands.
+
+## Testing Coverage
+
+The system includes comprehensive JUnit tests:
+
+- **AccountTest**: Tests for account creation, deposits, and withdrawals
+- **TransactionManagerTest**: Tests for all transaction operations
+- **ExceptionTest**: Tests for exception handling scenarios
+
+## Usage Examples
+
+### Main Menu
+```
+BANK ACCOUNT MANAGEMENT SYSTEM
+
+Main Menu:
+---
+1. Manage Accounts
+2. Perform Transactions
+3. Generate Account Statements
+4. Run Tests
+5. Exit
+
+Enter your choice: _
+```
+
+### Error Handling
+The system gracefully handles invalid inputs:
+- Invalid account numbers
+- Negative amounts
+- Insufficient funds
+- Overdraft limit exceeded
+
+## Clean Code Practices
+
+- **Meaningful Names**: Clear, descriptive variable and method names
+- **Single Responsibility**: Each class and method has a single, well-defined purpose
+- **Exception Handling**: Proper try-catch blocks and custom exceptions
+- **Modular Design**: Separation of concerns across different service classes
+- **Documentation**: JavaDoc comments for public methods
+
+## Architecture
+
+- **Models**: Account, Customer, and Transaction entities
+- **Services**: Business logic for account management and transactions
+- **Exceptions**: Custom exception classes for specific error scenarios
+- **Utils**: Helper classes for validation and common operations
+
+## Version Control Best Practices
+
+- Feature branching for isolated development
+- Regular commits with descriptive messages
+- Cherry-picking for selective code integration
+- Merge strategies for combining features
 
